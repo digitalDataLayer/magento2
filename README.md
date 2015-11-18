@@ -33,6 +33,28 @@ The Digital Data Layer is enabled by default. If it has been disabled, follow th
 5. The Digital Data Layer should now be enabled
 
 
+Extensions to the Digital Data Layer standard
+---------------------------------------------
+
+This plugin adds the "availability" and "stockLevel" attribute to the official DDL standard productInfo object:
+
+```javascript
+window.digitalData.product = [];
+window.digitalData.product.push({
+    productInfo: {
+        availability: 'in stock|out of stock',
+        stockLevel: 32,
+    },
+    category:...
+    price:...
+    linkedProduct:...
+});
+```
+
+Note that whether these two properties are output in the digitalData object is configured in the configuration
+of this plugin, "Enable Stock Exposure". You can choose not to output any stock information, only availability
+or stock level counts.
+
 Notes for extending the Extension
 ---------------------------------
 
