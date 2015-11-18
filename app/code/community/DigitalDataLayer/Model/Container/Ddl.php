@@ -1,6 +1,6 @@
 <?php
 
-class TriggeredMessaging_DigitalDataLayer_Model_Container_Ddl extends Enterprise_PageCache_Model_Container_Advanced_Quote
+class DigitalDataLayer_Model_Container_Ddl extends Enterprise_PageCache_Model_Container_Advanced_Quote
 {
     /**
      * Render block content

@@ -1,6 +1,6 @@
 <?php
 
-class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
+class DigitalDataLayer_Model_Page_Observer
 {
 
     // Specification is at
@@ -209,24 +209,24 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
         return $this->_version;
     }
 
-    public function getPurchaseCompleteQs()
-    {
-
-        $orderId = $this->_getCheckoutSession()->getLastOrderId();
-        if ($orderId) {
-            $order = $this->_getSalesOrder()->load($orderId);
-            $email = $order->getCustomerEmail();
-        } else {
-            $email = $user->getEmail();
-        }
-        $qs = "e=" . urlencode($email);
-
-        if ($orderId) {
-            $qs = $qs . "&r=" . urlencode($orderId);
-        }
-
-        return $qs;
-    }
+    // public function getPurchaseCompleteQs()
+    // {
+    //
+    //     $orderId = $this->_getCheckoutSession()->getLastOrderId();
+    //     if ($orderId) {
+    //         $order = $this->_getSalesOrder()->load($orderId);
+    //         $email = $order->getCustomerEmail();
+    //     } else {
+    //         $email = $user->getEmail();
+    //     }
+    //     $qs = "e=" . urlencode($email);
+    //
+    //     if ($orderId) {
+    //         $qs = $qs . "&r=" . urlencode($orderId);
+    //     }
+    //
+    //     return $qs;
+    // }
 
     public function getUser()
     {
@@ -491,7 +491,8 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
                       description: "Running, in the winter, in Edinburgh",
                       productURL: "http://www.greatrun.org/Events/Event.aspx?id=2",
                       productImage: "http://www.greatrun.org/Events/App_Images/slideshow/cropped/saved/gwir_01f0a780d94.jpg",
-                      productThumbnail: "http://www.greatrun.org/App_Images/2011/Events/logo_GWIR.jpg"
+                      productThumbnail: "http://www.greatrun.org/App_Images/2011/Events/logo_GWIR.jpg",
+                      sku: ""
                   },
                   category: {
                       primaryCategory: "Somecategory",
@@ -520,7 +521,7 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
             $opt = $product->getProduct()->getTypeInstance(true)->getOrderOptions($product->getProduct());
             if (isset($opt['attributes_info'])) {
                 foreach ($opt['attributes_info'] as $attribute) {
-                    $options[$attribute['label']] = $attribute['value'];
+                    $options[lcfirst($attribute['label'])] = $attribute['value'];
                 }
             }
             $productId = $product->getProductId();
@@ -538,16 +539,14 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
             $product_model['productInfo']['productName'] = $product->getName();
             $product_model['productInfo']['description'] = strip_tags($product->getShortDescription());
             $product_model['productInfo']['productURL'] = $product->getProductUrl();
-			$stock = $this->_getProductStock($product);
-			if($this->_stockExp==2){
-				$product_model['productInfo']['stock'] = $stock;
-			} else if($this->_stockExp==1){
-				if($stock>0){
-					$product_model['productInfo']['stock'] = 'In Stock';
-				} else {
-					$product_model['productInfo']['stock'] = 'Out of Stock';
-				}
-			}
+            if ($this->_stockExp!=0) {
+                $stock = $this->_getProductStock($product);
+                if($this->_stockExp==2){
+                    $product_model['productInfo']['stockLevel'] = $stock;
+                } else if($this->_stockExp==1){
+                    $product_model['productInfo']['availability'] = ($stock>0 ? 'in stock' : 'out of stock');
+                }
+            }
 
             //Check if images contain placeholders
             if ($product->getImage() && $product->getImage() !== "no_selection") {
@@ -557,6 +556,14 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
                 $product_model['productInfo']['productThumbnail'] = $product->getThumbnailUrl();
             }
             //Attributes
+            if ($options['size']) {
+                $product_model['productInfo']['size'] = $options['size'];
+                unset($options['size']);
+            }
+            if ($options['color']) {
+                $product_model['productInfo']['color'] = $options['color'];
+                unset($options['color']);
+            }
             if ($product->getWeight() && in_array('weight', $this->_expAttr)) {
                 $product_model['attributes']['weight'] = floatval($product->getWeight());
             }
@@ -588,7 +595,8 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
                 }
                 //Add the options captured earlier
                 if (count($options)) {
-                    $product_model['attributes']['options'] = $options;
+                    //$product_model['attributes']['options'] = $options;
+                    $product_model['attributes'] += $options;
                 }
             } catch (Exception $e) {
             }
@@ -783,7 +791,9 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
                       description: "Running, in the winter, in Edinburgh",
                       productURL: "http://www.greatrun.org/Events/Event.aspx?id=2",
                       productImage: "http://www.greatrun.org/Events/App_Images/slideshow/cropped/saved/gwir_01f0a780d94.jpg",
-                      productThumbnail: "http://www.greatrun.org/App_Images/2011/Events/logo_GWIR.jpg"
+                      productThumbnail: "http://www.greatrun.org/App_Images/2011/Events/logo_GWIR.jpg",
+                      primaryCategory: "...",
+                      sku: ""
                   },
                   category: {
                       primaryCategory: "Somecategory",
@@ -948,9 +958,9 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
                 $cart['cartID'] = (string)$cart_id;
             }
             $cart['price'] = array();
-	    if ($quote->getSubtotal()) {
-		$cart['price']['basePrice'] = $quote->getSubtotal();
-	    }
+            if ($quote->getSubtotal()) {
+                $cart['price']['basePrice'] = $quote->getSubtotal();
+            }
             if ($quote->getBaseSubtotal()) {
                 $cart['price']['basePrice'] = $this->getCurrentPrice(floatval($quote->getBaseSubtotal()), false, false);
             } else {
@@ -1133,7 +1143,7 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
                     $transaction['profile']['shippingAddress'] = $this->_getAddress($shippingAddress);
                 }
                 // Get items
-                $items = $order->getAllItems();
+                $items = $order->getAllVisibleItems();
                 $line_items = $this->_getLineItems($items, 'transaction');
                 $transaction['item'] = $line_items;
 
@@ -1158,14 +1168,14 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
         //  - version = "1.0"
 
         try {
-            $triggered_messaging_digital_data_layer_enabled = (boolean)Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_enabled');
+            $ddl_enabled = (boolean)Mage::getStoreConfig('digital_data_layer/enabled');
 
-            if ($triggered_messaging_digital_data_layer_enabled == 1) {
-                $this->_debug = (boolean)Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_debug_enabled');
-                $this->_userGroupExp = (boolean)Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_user_group_enabled');
-                $this->_expAttr = explode(',', Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_attributes_enabled'));
-				$this->_stockExp = (int)Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_stock_exposure');
-				$this->_listLimit = Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_prod_list_exposure');
+            if ($ddl_enabled == 1) {
+                $this->_debug = (boolean)Mage::getStoreConfig('digital_data_layer/debug_enabled');
+                $this->_userGroupExp = (boolean)Mage::getStoreConfig('digital_data_layer/user_group_enabled');
+                $this->_expAttr = explode(',', Mage::getStoreConfig('digital_data_layer/attributes_enabled'));
+				$this->_stockExp = (int)Mage::getStoreConfig('digital_data_layer/stock_exposure');
+				$this->_listLimit = Mage::getStoreConfig('digital_data_layer/prod_list_exposure');
 				
                 $this->_setUser();
                 $this->_setPage();
@@ -1188,7 +1198,7 @@ class TriggeredMessaging_DigitalDataLayer_Model_Page_Observer
 
                 // Add script after content block, to grab products shown on category and search pages
                 $layout = $observer->getEvent()->getLayout()->getUpdate();
-                $layout->addHandle('tms_block_after_content');
+                $layout->addHandle('after_content');
             }
         } catch (Exception $e) {
         }

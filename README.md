@@ -67,6 +67,8 @@ system.xml
 Authors
 -------
 
+[Miguel Vitorino](http://github.com/mvitorino)
+
 [Muhammed Onu Miah](http://github.com/momiah)
 
 [Blake Finney](http://github.com/blakefinney)
@@ -76,7 +78,11 @@ Authors
 
 License
 -------
-Copyright 2014 Triggered Messaging
+
+This work contains significant portions of the original W3C Digital
+Data Layer by Triggered Messaging.
+
+Original Copyright 2014 Triggered Messaging
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

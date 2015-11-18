@@ -1,6 +1,6 @@
 <?php
 
-class TriggeredMessaging_DigitalDataLayer_Model_System_Config_Source_Productattributes
+class DigitalDataLayer_Model_System_Config_Source_Productattributes
 {
     /**
      * Options getter

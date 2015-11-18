@@ -1,6 +1,6 @@
 <?php
 
-class TriggeredMessaging_DigitalDataLayer_Model_Observer
+class DigitalDataLayer_Model_Observer
 {
     /**
      * Is Enabled Full Page Cache
@@ -42,7 +42,7 @@ class TriggeredMessaging_DigitalDataLayer_Model_Observer
             return $this;
         }
         try {
-            $cacheId = TriggeredMessaging_DigitalDataLayer_Model_Container_Ddl::getCacheId();
+            $cacheId = DigitalDataLayer_Model_Container_Ddl::getCacheId();
             Enterprise_PageCache_Model_Cache::getCacheInstance()->remove($cacheId);
         } catch (Exception $e) {
         }

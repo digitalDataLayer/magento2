@@ -1,18 +1,18 @@
 <?php try {
 
-    /* @var $this TriggeredMessaging_DigitalDataLayer_Block_Ddl */
-    $triggered_messaging_digital_data_layer_enabled = Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_enabled');
-	$triggered_messaging_digital_data_layer_prod_list_limit = Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_prod_list_exposure');
-	if($triggered_messaging_digital_data_layer_prod_list_limit===''){
+    /* @var $this DigitalDataLayer_Block_Ddl */
+    $enabled = Mage::getStoreConfig('digital_data_layer/enabled');
+	$prod_list_limit = Mage::getStoreConfig('digital_data_layer/prod_list_exposure');
+	if($prod_list_limit===''){
 		//If blank we want to expose all products, so set to a number the counter won't ever get to
-		$triggered_messaging_digital_data_layer_prod_list_limit = -1;
+		$prod_list_limit = -1;
 	} else {
 		//Else make sure it's an integer value so counter will hit the value
-		$triggered_messaging_digital_data_layer_prod_list_limit = (int)$triggered_messaging_digital_data_layer_prod_list_limit;
+		$prod_list_limit = (int)$prod_list_limit;
 	}
 
     // extract variable only when digital data layer is enabled
-    if ($triggered_messaging_digital_data_layer_enabled == 1) :
+    if ($enabled == 1) :
 
         $observer = 'digital_data_layer_main/page_observer';
         $mage = Mage::getSingleton($observer);
@@ -54,7 +54,7 @@
         $products = array();
 		$counter = 0;
         foreach ($_productCollection as $_product) {
-			if($counter===$triggered_messaging_digital_data_layer_prod_list_limit){
+			if($counter===$prod_list_limit){
 				//Once limit has been hit, break out of the loop
 				break;
 			} else {

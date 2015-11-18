@@ -1,9 +1,7 @@
 <?php try { ?>
     <?php
-    /* @var $this TriggeredMessaging_DigitalDataLayer_Block_Ddl */
-    $triggered_messaging_website_id = Mage::getStoreConfig('triggered_messaging/triggered_messaging_website_id');
-    $triggered_messaging_script_enabled = Mage::getStoreConfig('triggered_messaging/triggered_messaging_script_enabled');
-    $triggered_messaging_digital_data_layer_enabled = Mage::getStoreConfig('triggered_messaging/triggered_messaging_digital_data_layer_enabled');
+    /* @var $this DigitalDataLayer_Block_Ddl */
+    $triggered_messaging_digital_data_layer_enabled = Mage::getStoreConfig('digital_data_layer/enabled');
 
     $observer = 'digital_data_layer_main/page_observer';
     $mage = Mage::getSingleton($observer);
@@ -19,7 +17,7 @@
         $listing = $mage->getListing();
         $transaction = $mage->getTransaction();
         $events = $mage->getEvents();
-        $pluginVersion = (string)Mage::getConfig()->getNode()->modules->TriggeredMessaging_DigitalDataLayer->version;
+        $pluginVersion = (string)Mage::getConfig()->getNode()->modules->DigitalDataLayer->version;
         $timeStamp = time() * 1000;
         ?>
         <?php
@@ -68,24 +66,6 @@
             }
         </script>
         <!-- W3C Digital Data Layer End -->
-    <?php endif; ?>
-
-    <?php if ($triggered_messaging_script_enabled) : ?>
-        <!-- Fresh Relevance Script Start -->
-        <?php if ($triggered_messaging_website_id) : ?>
-            <script defer="defer" async="async"
-                    src='//d81mfvml8p5ml.cloudfront.net/<?php echo $triggered_messaging_website_id; ?>.js'></script>
-            <?php if ($mage->_isConfirmation()) : ?>
-                <?php $pcqs = $mage->getPurchaseCompleteQs(); ?>
-                <img
-                    src="//d1f0tbk1v3e25u.cloudfront.net/pc/<?php echo $triggered_messaging_website_id; ?>/?<?php echo $pcqs; ?>"/>
-            <?php endif; ?>
-        <?php else: ?>
-            <script type="text/javascript">
-                console.log("You have enabled the Fresh Relevance script from the Magento Admin Configuration Panel, but have not supplied a website ID. Please go to http://www.freshrelevance.com/contact for support on this.");
-            </script>
-        <?php endif; ?>
-        <!-- Fresh Relevance Script End -->
     <?php endif; ?>
 
 <?php } catch (Exception $e) {
