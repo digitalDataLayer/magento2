@@ -829,6 +829,10 @@ class DigitalDataLayer_Model_Page_Observer
                 } else {
                     $litem_model = $this->_getProductModel($item, 'cart');
                 }
+                if ($litem_model['productInfo'] && $item->getSku()) {
+                    // use SKU from order or quote item since it's the actual sku selected/sold and not the parent one
+                    $litem_model['productInfo']['sku'] = $item->getSku();
+                }
                 if ($page_type === 'cart') {
                     $litem_model['quantity'] = floatval($item->getQty());
                 } else {
