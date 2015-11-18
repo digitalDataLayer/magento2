@@ -40,27 +40,25 @@ Most changes to implement new features will be made to the following files:
 
 Observer.php
 
-* Location: /app/code/community/TriggeredMessaging/DigitalDataLayer/Model/Page/
+* Location: /app/code/community/DigitalDataLayer/Model/Page/
 * Info: Contains all of the code that extracts data from Magento's backend. The method `setDigitalDataLayer()`
   initialises all data objects.
 
 
-digital_data_layer.phtml
+head.phtml
 
-* Location: /app/design/frontend/base/default/template/triggeredmessaging/
-* Info: Template file that outputs the digitalData layer as a JavaScript object. Also includes the Triggered Messaging
-  Script if enabled from the admin panel.
+* Location: /app/design/frontend/base/default/template/digitaldatalayer/
+* Info: Template file that outputs the digitalData layer as a JavaScript object.
 
+after_content.phtml
 
-digital_data_layer_after_content.phtml
-
-* Location: /app/design/frontend/base/default/template/triggeredmessaging/
+* Location: /app/design/frontend/base/default/template/digitaldatalayer/
 * Info: Template file that adds product data for category, tag and search pages to the digitalData object.
 
 
 system.xml
 
-* Location: /app/code/community/TriggeredMessaging/DigitalDataLayer/etc/
+* Location: /app/code/community/DigitalDataLayer/etc/
 * Info: To make changes to the configuration section in the Admin Panel.
 
 
