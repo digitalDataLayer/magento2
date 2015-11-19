@@ -34,38 +34,23 @@
         } catch (Exception $e) {
         }
         ?>
-        <!-- W3C Digital Data Layer Start -->
-        <script type="text/javascript">
-            try {
-                window.digitalData = window.digitalData || {};
-                window.digitalData.version = <?php echo json_encode($version); ?>;
-                window.digitalData.page = <?php echo json_encode($page); ?>;
-                window.digitalData.user = <?php echo json_encode($user); ?>;
-                <?php if ($product) : ?>
-                window.digitalData.product = <?php echo json_encode($product) ?>;
-                <?php endif; ?>
-                <?php if ($cart) : ?>
-                window.digitalData.cart = <?php echo json_encode($cart) ?>;
-                <?php endif; ?>
-                <?php if ($listing): ?>
-                window.digitalData.listing = <?php echo json_encode($listing) ?>;
-                <?php endif; ?>
-                <?php if ($transaction): ?>
-                window.digitalData.transaction = <?php echo json_encode($transaction) ?>;
-                <?php endif; ?>
-                <?php if ($events): ?>
-                window.digitalData.events = <?php echo json_encode($events); ?>;
-                <?php endif; ?>
-                <?php if ($pluginVersion): ?>
-                window.digitalData.pluginVersion = <?php echo json_encode($pluginVersion); ?>;
-                <?php endif; ?>
-                <?php if ($timeStamp): ?>
-                window.digitalData.generatedDate = <?php echo json_encode($timeStamp); ?>;
-                <?php endif; ?>
-            } catch (e) {
-            }
-        </script>
-        <!-- W3C Digital Data Layer End -->
+<script>
+(function(w,d){
+  try {
+    d = w.digitalData || {};
+    w.digitalData = d;
+    d.version = <?php echo json_encode($version); ?>;
+    d.page = <?php echo json_encode($page); ?>;
+    d.user = <?php echo json_encode($user); ?>;
+    <?php if ($product) : ?>d.product = <?php echo json_encode($product) ?>;<?php endif; ?>
+    <?php if ($cart) : ?>d.cart = <?php echo json_encode($cart) ?>;<?php endif; ?>
+    <?php if ($listing): ?>d.listing = <?php echo json_encode($listing) ?>;<?php endif; ?>
+    <?php if ($transaction): ?>d.transaction = <?php echo json_encode($transaction) ?>;<?php endif; ?>
+    <?php if ($events): ?>d.events = <?php echo json_encode($events); ?>;<?php endif; ?>
+    <?php if ($pluginVersion): ?>d.pluginVersion = <?php echo json_encode($pluginVersion); ?>;<?php endif; ?>
+    <?php if ($timeStamp): ?>d.generatedDate = <?php echo json_encode($timeStamp); ?>;<?php endif; ?>
+  } catch (e) {}})(window);
+</script>
     <?php endif; ?>
 
 <?php } catch (Exception $e) {
