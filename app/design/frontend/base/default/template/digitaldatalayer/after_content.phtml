@@ -33,21 +33,27 @@
 
         // Grab product list data (from category and search pages)
         $that = Mage::getBlockSingleton('catalog/product_list');
-        if (!$that) return;
-	// Check to see if we are on the advanced search page
-	if ($this->getRequest()->getControllerName()=='advanced') {
-		// If we are on the advanced search index page, don't build item collection				
-		if(strrpos(Mage::app()->getRequest()->getActionName(), 'result') === false){
-			return;
-		}
-		// If were not on the index, assume we are on the result page, build collection from results
-		$_productCollection = Mage::getSingleton('catalogsearch/advanced')->getProductCollection();    
-	} else {
-		// If were not on the advanced search page, get loaded products
-		$_productCollection = $that->getLoadedProductCollection();
-	}
-        if (!$_productCollection) return;
-        if ($_productCollection->count() === 0) return;
+        if (!$that) {
+            return;
+        }
+	    // Check to see if we are on the advanced search page
+	    if ($this->getRequest()->getControllerName()=='advanced') {
+		    // If we are on the advanced search index page, don't build item collection				
+		    if(strrpos(Mage::app()->getRequest()->getActionName(), 'result') === false){
+    			return;
+	    	}
+		    // If were not on the index, assume we are on the result page, build collection from results
+		    $_productCollection = Mage::getSingleton('catalogsearch/advanced')->getProductCollection();    
+	    } else {
+		    // If were not on the advanced search page, get loaded products
+		    $_productCollection = $that->getLoadedProductCollection();
+	    }
+        if (!$_productCollection) {
+            return;
+        }
+        if ($_productCollection->count() === 0) {
+            return;
+        }
 
         // Extract products displayed on category page
         // Need to do it after content block as the specified products are loaded then
@@ -64,6 +70,8 @@
         }
 
         $preloaded_product = $mage->getProduct();
+        // only output tag if we have any products to output (save a little bandwidth)
+        if ($products) :
         ?>
         <!-- W3C Digital Data Layer Extra Info Start -->
         <script type="text/javascript">
@@ -80,6 +88,7 @@
         </script>
         <!-- W3C Digital Data Layer Extra Info End -->
     <?php
+        endif;
     endif;
 
 } catch (Exception $e) {
