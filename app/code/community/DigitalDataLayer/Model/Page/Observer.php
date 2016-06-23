@@ -194,7 +194,7 @@ class DigitalDataLayer_Model_Page_Observer
             return floatval(number_format(Mage::helper('core')->currency((float)$_price, $p1, $p2), 2, '.', ''));
         }
     }
-	
+
 	/*
      * Get information on pages to pass to front end
      */
@@ -203,7 +203,7 @@ class DigitalDataLayer_Model_Page_Observer
 		$tax_helper = Mage::helper('tax');
         return round(Mage::helper('core')->currency($tax_helper->getPrice($_product,$_price, $IncTax),false,false),2);
     }
-	
+
     public function getVersion()
     {
         return $this->_version;
@@ -516,6 +516,7 @@ class DigitalDataLayer_Model_Page_Observer
 
         $product_model = array();
         $options = array();
+        $product_model['attributes'] = array();
         //If there is optional data then add it
         if ($_page_ === 'cart') {
             $opt = $product->getProduct()->getTypeInstance(true)->getOrderOptions($product->getProduct());
@@ -1180,7 +1181,7 @@ class DigitalDataLayer_Model_Page_Observer
                 $this->_expAttr = explode(',', Mage::getStoreConfig('digital_data_layer/attributes_enabled'));
 				$this->_stockExp = (int)Mage::getStoreConfig('digital_data_layer/stock_exposure');
 				$this->_listLimit = Mage::getStoreConfig('digital_data_layer/prod_list_exposure');
-				
+
                 $this->_setUser();
                 $this->_setPage();
 
