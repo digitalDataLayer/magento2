@@ -31,7 +31,7 @@ How to enable the Digital Data layer
 The Digital Data Layer is enabled by default. If it has been disabled, follow these steps to re-enable it:
 
 1. Log in to the Admin Panel
-2. Navigate through System -> Configuration
+2. Navigate through Stores -> Configuration
 3. On the left pane under "W3C Digital Data Layer", click on "Configuration"
 4. On the right area, make sure that the box with heading "Digital Data Layer Configuration" is expanded
 4. For "Enable Digital Data Layer" select "Yes"
