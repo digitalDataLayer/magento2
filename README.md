@@ -9,13 +9,18 @@ How to install
 
 To manually install the extension:
 
-1. Log in to the Admin Panel
-2. Navigate through System -> Magento Connect -> Magento Connect Manager
-3. Enter username and password for Magento Connect Manager
-4. Under "Direct package file upload" click "Choose file" and select the extension file
-5. Click on 'Upload'
-6. The extension should now begin installing
-7. After it has been installed, click on 'Refresh' to see the changes
+1. Download the extension
+2. Unzip the file
+3. Create a folder {Magento 2 root}/app/code/Persomi/Digitaldatalayer
+4. Copy the content from the unzip folder
+
+
+Enable W3C digitalData Layer (from {Magento root} folder):
+
+1. php -f bin/magento module:enable --clear-static-content Persomi_Digitaldatalayer 
+2. php -f bin/magento setup:upgrade
+3. The extension should now begin installing
+4. After it has been installed, click on 'Refresh' to see the changes
 
 Note: you may need to log out and log back in to be able to access the configuration panel of this extension.
 
@@ -60,27 +65,22 @@ Notes for extending the Extension
 
 Most changes to implement new features will be made to the following files:
 
-Observer.php
+DataLayer.php
 
-* Location: /app/code/community/DigitalDataLayer/Model/Page/
+* Location: /app/code/Persomi/Digitaldatalayer/Model/
 * Info: Contains all of the code that extracts data from Magento's backend. The method `setDigitalDataLayer()`
   initialises all data objects.
 
 
 head.phtml
 
-* Location: /app/design/frontend/base/default/template/digitaldatalayer/
+* Location: /app/code/Persomi/Digitaldatalayer/view/frontend/templates/
 * Info: Template file that outputs the digitalData layer as a JavaScript object.
-
-after_content.phtml
-
-* Location: /app/design/frontend/base/default/template/digitaldatalayer/
-* Info: Template file that adds product data for category, tag and search pages to the digitalData object.
 
 
 system.xml
 
-* Location: /app/code/community/DigitalDataLayer/etc/
+* Location: /app/code/Persomi/Digitaldatalayer/etc/adminhtml/
 * Info: To make changes to the configuration section in the Admin Panel.
 
 
@@ -94,6 +94,10 @@ Authors
 [Blake Finney](http://github.com/blakefinney)
 
 [David Henderson](http://github.com/dhendo)
+
+[Vipul Dadhich](https://github.com/thoughtyards)
+
+[Dinesh Kumar](https://github.com/thoughtyards)
 
 
 License

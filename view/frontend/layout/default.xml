@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="after.body.start">
+          <block class="Persomi\Digitaldatalayer\Block\Ddl" name="persomi_ddl" as="persomi_ddl" template="head.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

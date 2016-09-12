@@ -1,0 +1,20 @@
+<?php try { ?>
+<?php
+	$timeStamp = time() * 1000;
+?>
+<script>
+(function(w,d){
+  try {
+    d = w.digitalData || {};
+    w.digitalData = d;
+    d.version = <?php echo json_encode($block->getMagentoVersion()); ?>;
+	d.page = <?php echo json_encode($block->getPage()); ?>;
+    d.user = <?php echo json_encode($block->getUser()); ?>;
+	<?php if ($timeStamp): ?>d.generatedDate = <?php echo json_encode($timeStamp); ?>;<?php endif; ?>
+	
+  } catch (e) {}})(window);
+</script>
+		
+<?php } catch (Exception $e) {
+		
+	}
