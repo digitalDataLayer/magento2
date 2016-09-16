@@ -78,7 +78,9 @@ class Ddl extends Template {
 	
 	public function getPage()
 	{
-		return $this->_dataLayerModel->getPage();
+		$_page = $this->_dataLayerModel->getPage();
+		$_page['pageInfo']['pageName'] = $this->getLayout()->getBlock('page.main.title')->getPageTitle();
+		return $_page;
 	}
 
 }
