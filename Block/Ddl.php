@@ -66,20 +66,35 @@ class Ddl extends Template {
         return parent::_toHtml();
     }
 	
-	public function getMagentoVersion()
-	{
+	public function getMagentoVersion(){
 		return $this->_productMetadata->getVersion();
 	}
 	
-	public function getUser()
-	{
+	public function getUser(){
 		return $this->_dataLayerModel->getUser();
 	}
 	
-	public function getPage()
-	{
+	public function getProduct(){
+		return $this->_dataLayerModel->getProduct();
+	}
+	
+	public function getCart(){
+		return $this->_dataLayerModel->getCart();
+	}
+	
+	public function getListing(){
+		return $this->_dataLayerModel->getListing();
+	}
+	
+	public function getEvents(){
+		return $this->_dataLayerModel->getEvents();
+	}
+	
+	public function getPage(){
 		$_page = $this->_dataLayerModel->getPage();
-		$_page['pageInfo']['pageName'] = $this->getLayout()->getBlock('page.main.title')->getPageTitle();
+		if(isset($_page['pageInfo']['pageName']) && $_page['pageInfo']['pageName'] == ""){
+			$_page['pageInfo']['pageName'] = $this->getLayout()->getBlock('page.main.title')->getPageTitle();
+		}
 		return $_page;
 	}
 

@@ -1,18 +1,26 @@
 <?php try { ?>
 <?php
 	$timeStamp = time() * 1000;
+	$cart = $block->getCart();
+	$events = $block->getEvents();
+	$product = $block->getProduct();
+	$listing = $block->getListing();
 ?>
 <script>
 (function(w,d){
-  try {
-    d = w.digitalData || {};
-    w.digitalData = d;
-    d.version = <?php echo json_encode($block->getMagentoVersion()); ?>;
-	d.page = <?php echo json_encode($block->getPage()); ?>;
-    d.user = <?php echo json_encode($block->getUser()); ?>;
-	<?php if ($timeStamp): ?>d.generatedDate = <?php echo json_encode($timeStamp); ?>;<?php endif; ?>
+    try {
+        d = w.digitalData || {};
+        w.digitalData = d;
+        d.version = <?php echo json_encode($block->getMagentoVersion()); ?>;
+        d.page = <?php echo json_encode($block->getPage()); ?>;
+        d.user = <?php echo json_encode($block->getUser()); ?>;
+	<?php if($product): ?>d.product = <?php echo json_encode($product) ?>;<?php endif; ?>
+	<?php if($cart): ?>d.cart = <?php echo json_encode($cart); ?>;<?php endif; ?>
+	<?php if($listing): ?>d.listing = <?php echo json_encode($listing) ?>;<?php endif; ?>
+	<?php if($events): ?>d.events = <?php echo json_encode($events); ?>;<?php endif; ?>
+	<?php if($timeStamp): ?>d.generatedDate = <?php echo json_encode($timeStamp); ?>;<?php endif; ?>
 	
-  } catch (e) {}})(window);
+	} catch (e) {}})(window);
 </script>
 		
 <?php } catch (Exception $e) {
