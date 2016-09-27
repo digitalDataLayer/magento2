@@ -87,13 +87,6 @@ system.xml
 Authors
 -------
 
-[Miguel Vitorino](http://github.com/mvitorino)
-
-[Muhammed Onu Miah](http://github.com/momiah)
-
-[Blake Finney](http://github.com/blakefinney)
-
-[David Henderson](http://github.com/dhendo)
 
 [Vipul Dadhich](https://github.com/thoughtyards)
 
