@@ -86,6 +86,14 @@ class Ddl extends Template {
 		return $this->_dataLayerModel->getListing();
 	}
 	
+	public function getTransaction(){
+		return $this->_dataLayerModel->getTransaction();
+	}
+	
+	public function getVersion(){
+		return $this->_ddlHelper->getVersion();
+	}
+	
 	public function getEvents(){
 		return $this->_dataLayerModel->getEvents();
 	}

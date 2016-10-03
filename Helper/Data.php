@@ -3,6 +3,8 @@
 
 namespace Persomi\Digitaldatalayer\Helper;
 
+use Magento\Framework\Module\ModuleListInterface;
+
 class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 	
 	const XML_PATH_ACTIVE = 'digital_data_layer/enabled';
@@ -15,14 +17,24 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      * @var \Magento\Framework\ObjectManagerInterface
      */
     protected $_objectManager;
+	
+	protected $_moduleList;
+	
+	
+	const MODULE_NAME = 'Persomi_Digitaldatalayer';
+	
+	
     /**
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Framework\ObjectManagerInterface
      */
     public function __construct(
-    \Magento\Framework\App\Helper\Context $context, \Magento\Framework\ObjectManagerInterface $objectManager
+		\Magento\Framework\App\Helper\Context $context,
+		\Magento\Framework\ObjectManagerInterface $objectManager,
+		ModuleListInterface $moduleList
     ) {
         $this->_objectManager = $objectManager;
+		$this->_moduleList = $moduleList;
         parent::__construct($context);
     }
     /**
@@ -76,5 +88,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
      */
     public function getProductListExp() {
         return $this->scopeConfig->getValue(self::XML_PATH_PRODUCTLISTEXPOSURE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+	
+	public function getVersion(){
+        return $this->_moduleList->getOne(self::MODULE_NAME)['setup_version'];
     }
 }

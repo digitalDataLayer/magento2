@@ -155,6 +155,10 @@ class DataLayer extends DataObject {
         return $this->_cart;
     }
 	
+	public function getTransaction(){
+        return $this->_transaction;
+    }
+	
 	public function getListing(){
         return $this->_listing;
     }
@@ -375,6 +379,10 @@ class DataLayer extends DataObject {
 				
 		if (!$this->_isConfirmation()) {
 			$this->_setCart();
+		}
+		
+		if ($this->_isConfirmation()) {
+			$this->_setTransaction();
 		}
 	}
 	
@@ -934,6 +942,73 @@ class DataLayer extends DataObject {
         } catch (Exception $e) {
         }
     }
+	
+	
+	public function _setTransaction(){
+		try {
+			$orderId = $this->_checkoutSession->getLastOrderId();
+			
+			if ($orderId) {
+				$transaction = array();
+				$order = $this->_salesOrder->load($orderId);
+				
+				// Get general details
+				$transaction['transactionID'] = $order->getIncrementId();
+				$transaction['total'] = array();
+				$transaction['total']['currency'] = $this->_getCurrency();
+				$transaction['total']['basePrice'] = (float)$order->getSubtotal();
+				$transaction['total']['transactionTotal'] = (float)$order->getGrandTotal();
+				
+				
+				$voucher = $order->getCouponCode();
+				$transaction['total']['voucherCode'] = $voucher ? $voucher : "";
+				$voucher_discount = -1 * $order->getDiscountAmount();
+				$transaction['total']['voucherDiscount'] = $voucher_discount ? $voucher_discount : 0;
+				
+				$transaction['total']['shipping'] = (float)$order->getShippingAmount();
+				$transaction['total']['shippingMethod'] = $this->_extractShippingMethod($order);
+				
+				// Get addresses
+				$transaction['profile'] = array();
+				if ($order->getBillingAddress()) {
+					$billingAddress = $order->getBillingAddress();
+					$transaction['profile']['address'] = $this->_getAddress($billingAddress);
+				}
+				
+				if ($order->getShippingAddress()) {
+					$shippingAddress = $order->getShippingAddress();
+					$transaction['profile']['shippingAddress'] = $this->_getAddress($shippingAddress);
+				}
+				
+				// Get items
+				$items = $order->getAllVisibleItems();
+				$line_items = $this->_getLineItems($items, 'transaction');
+				$transaction['item'] = $line_items;
+				$this->_transaction = $transaction;
+            }
+        } catch (Exception $e) {
+			
+        }
+    }
+	
+	
+	public function _getAddress($address){
+		$billing = array();
+		try {
+			if ($address) {
+				$billing['line1'] = $address->getName();
+				$billing['line2'] = $address->getStreetFull();
+				$billing['city'] = $address->getCity();
+				$billing['postalCode'] = $address->getPostcode();
+				$billing['country'] = $address->getCountry();
+				$state = $address->getRegion();
+				$billing['stateProvince'] = $state ? $state : '';
+			}
+		} catch (Exception $e) {
+			
+		}
+		return $billing;
+	}
 	
 	
 }
