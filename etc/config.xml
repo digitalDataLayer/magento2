@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+		<digital_data_layer>
+            <enabled>1</enabled>
+            <debug_enabled>0</debug_enabled>
+            <user_group_enabled>0</user_group_enabled>
+            <attributes_enabled></attributes_enabled>
+	        <stock_exposure>0</stock_exposure>
+	        <prod_list_exposure>0</prod_list_exposure>
+        </digital_data_layer>
+    </default>
+</config>
