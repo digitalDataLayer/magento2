@@ -6,24 +6,24 @@ namespace Persomi\Digitaldatalayer\Helper;
 use Magento\Framework\Module\ModuleListInterface;
 
 class Data extends \Magento\Framework\App\Helper\AbstractHelper {
-	
-	const XML_PATH_ACTIVE = 'digital_data_layer/enabled';
-    const XML_PATH_DEBUG = 'digital_data_layer/debug_enabled';
-    const XML_PATH_USERGROUPEXP = 'digital_data_layer/user_group_enabled';
-    const XML_PATH_ATTRIBUTES = 'digital_data_layer/attributes_enabled';
-    const XML_PATH_STOCKEXPOSURE = 'digital_data_layer/stock_exposure';
-    const XML_PATH_PRODUCTLISTEXPOSURE = 'digital_data_layer/prod_list_exposure';
+
+	const XML_PATH_ACTIVE = 'persomi/digital_data_layer/enabled';
+    const XML_PATH_DEBUG = 'persomi/digital_data_layer/debug_enabled';
+    const XML_PATH_USERGROUPEXP = 'persomi/digital_data_layer/user_group_enabled';
+    const XML_PATH_ATTRIBUTES = 'persomi/digital_data_layer/attributes_enabled';
+    const XML_PATH_STOCKEXPOSURE = 'persomi/digital_data_layer/stock_exposure';
+    const XML_PATH_PRODUCTLISTEXPOSURE = 'persomi/digital_data_layer/prod_list_exposure';
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
     protected $_objectManager;
-	
+
 	protected $_moduleList;
-	
-	
+
+
 	const MODULE_NAME = 'Persomi_Digitaldatalayer';
-	
-	
+
+
     /**
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Framework\ObjectManagerInterface
@@ -53,7 +53,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     public function getDebugMode() {
         return $this->scopeConfig->isSetFlag(self::XML_PATH_DEBUG, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
-	
+
 	/**
      * Get User Group Exp
      *
@@ -62,7 +62,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     public function getUserGropuExp() {
         return $this->scopeConfig->getValue(self::XML_PATH_USERGROUPEXP, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
-	
+
 	/**
      * Get Attributes
      *
@@ -71,7 +71,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     public function getAttribute() {
         return $this->scopeConfig->getValue(self::XML_PATH_ATTRIBUTES, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
-	
+
 	/**
      * Get Stock Exposure
      *
@@ -80,7 +80,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     public function getStockExposure() {
         return $this->scopeConfig->getValue(self::XML_PATH_STOCKEXPOSURE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
-	
+
 	/**
      * Get Product List Exposure
      *
@@ -89,7 +89,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
     public function getProductListExp() {
         return $this->scopeConfig->getValue(self::XML_PATH_PRODUCTLISTEXPOSURE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
-	
+
 	public function getVersion(){
         return $this->_moduleList->getOne(self::MODULE_NAME)['setup_version'];
     }

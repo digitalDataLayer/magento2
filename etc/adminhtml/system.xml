@@ -14,14 +14,14 @@
                 <field id="DigitalDataLayer_Enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Digital Data Layer</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-					<config_path>digital_data_layer/enabled</config_path>
+					<config_path>persomi/digital_data_layer/enabled</config_path>
 					<comment><![CDATA[ See <a href="http://www.w3.org/2013/12/ceddl-201312.pdf" target="_blank">http://www.w3.org/2013/12/ceddl-201312.pdf</a> for the specification. ]]></comment>
 					<tooltip><![CDATA[ See <a href="http://www.w3.org/2013/12/ceddl-201312.pdf" target="_blank">http://www.w3.org/2013/12/ceddl-201312.pdf</a> for the specification. ]]></tooltip>
                 </field>
 				<field id="DigitalDataLayer_DebugEnabled" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable Debug Mode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-					<config_path>digital_data_layer/debug_enabled</config_path>
+					<config_path>persomi/digital_data_layer/debug_enabled</config_path>
 					<comment><![CDATA[ Outputs more data about the page to the digitalData layer, for debugging purposes. Should be disabled for production use. ]]></comment>
 					<depends>
                         <field id="DigitalDataLayer_Enabled">1</field>
@@ -30,7 +30,7 @@
 				<field id="DigitalDataLayer_User_GroupEnabled" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Enable User Group Exposure</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-					<config_path>digital_data_layer/user_group_enabled</config_path>
+					<config_path>persomi/digital_data_layer/user_group_enabled</config_path>
 					<comment><![CDATA[ This will expose the user group that any logged in user is a part of. Disable if you require this to be kept private. ]]></comment>
 					<depends>
                         <field id="DigitalDataLayer_Enabled">1</field>
@@ -39,7 +39,7 @@
 				<field id="DigitalDataLayer_Attributes_Enabled" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
 					<label>Enable Product Attributes</label>
 					<source_model>Persomi\Digitaldatalayer\Model\System\Config\Source\Productattributes</source_model>
-					<config_path>digital_data_layer/attributes_enabled</config_path>
+					<config_path>persomi/digital_data_layer/attributes_enabled</config_path>
 					<comment><![CDATA[ Select the custom product attributes that you would like to expose. NOTE: You must use Shift or Ctrl to select multiple attributes. ]]></comment>
 					<depends>
                         <field id="DigitalDataLayer_Enabled">1</field>
@@ -48,15 +48,15 @@
 				<field id="DigitalDataLayer_Stock_Enabled" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
 					<label>Enable Stock Exposure</label>
 					<source_model>Persomi\Digitaldatalayer\Model\System\Config\Source\Stockexposure</source_model>
-					<config_path>digital_data_layer/stock_exposure</config_path>
-					<comment><![CDATA[ Optionally expose stock level in the Dgitial Data Layer. ]]></comment>
+					<config_path>persomi/digital_data_layer/stock_exposure</config_path>
+					<comment><![CDATA[ Optionally expose stock level in the Digital Data Layer. ]]></comment>
 					<depends>
                         <field id="DigitalDataLayer_Enabled">1</field>
                     </depends>
 				</field>
                 <field id="DigitalDataLayer_Prod_List_Enabled" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Limit Products Exposed On Product List</label>
-                    <config_path>digital_data_layer/prod_list_exposure</config_path>
+                    <config_path>persomi/digital_data_layer/prod_list_exposure</config_path>
 					<comment><![CDATA[ Set an optional limit for products exposed on a product list page. Leave blank to expose all products on a product list, or set to 0 to disable Product exposure on list pages. ]]></comment>
 					<depends>
                         <field id="DigitalDataLayer_Enabled">1</field>
