@@ -1,4 +1,5 @@
 <?php try { ?>
+<script>
 <?php
 	$product = $block->getProduct();
 	$cart = $block->getCart();
@@ -8,7 +9,6 @@
 	$pluginVersion = $block->getVersion();
 	$timeStamp = time() * 1000;
 ?>
-<script>
 (function(w,d){
     try {
         d = w.digitalData || {};
@@ -23,10 +23,10 @@
 	<?php if($events): ?>d.events = <?php echo json_encode($events); ?>;<?php endif; ?>
 	<?php if ($pluginVersion): ?>d.pluginVersion = <?php echo json_encode($pluginVersion); ?>;<?php endif; ?>
 	<?php if($timeStamp): ?>d.generatedDate = <?php echo json_encode($timeStamp); ?>;<?php endif; ?>
-	
+
 	} catch (e) {}})(window);
-</script>
-		
+	
 <?php } catch (Exception $e) {
-		
-	}
+	$block->_logger->critical($e);
+}?>
+</script>

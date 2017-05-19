@@ -10,6 +10,7 @@ use Persomi\Digitaldatalayer\Helper\Data as DdlHelper;
 
 class Ddl extends Template {
 	
+    public $_logger;
 	/**
      * Helper
      *
@@ -47,6 +48,7 @@ class Ddl extends Template {
         \Persomi\Digitaldatalayer\Model\DataLayer $dataLayer,
         \Magento\Framework\App\ProductMetadata $productMetadata,
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $salesOrderCollection,
+        \Psr\Log\LoggerInterface $logger, //log injection
         array $data = []
     ) {
         $this->_cookieHelper = $cookieHelper;
@@ -54,6 +56,7 @@ class Ddl extends Template {
         $this->_dataLayerModel = $dataLayer;
         $this->_productMetadata = $productMetadata;
         $this->_salesOrderCollection = $salesOrderCollection;
+        $this->_logger = $logger;
         parent::__construct($context, $data);
 		
 		$this->_dataLayerModel->setDigitalDataLayer();
