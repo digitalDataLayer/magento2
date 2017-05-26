@@ -695,7 +695,7 @@ class DataLayer extends DataObject {
 			$product_model['productInfo']['productID'] = $product->getId();
 			$product_model['productInfo']['sku'] = $product->getSku();
 			$product_model['productInfo']['productName'] = $product->getName();
-			$product_model['productInfo']['description'] = strip_tags($product->getDescription());
+			$product_model['productInfo']['description'] = $product->getDescription(); // strip_tags()
 			$product_model['productInfo']['productURL'] = $product->getProductUrl();
 
 			if ($this->_stockExp!=0) {
